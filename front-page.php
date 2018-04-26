@@ -6,9 +6,7 @@ while( have_posts() ){
 
 	the_post();
 
-	echo '<article>';
 	get_template_part( 'parts/content' );
-	echo '</article>';
 
 }
 

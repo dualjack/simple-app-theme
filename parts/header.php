@@ -1,7 +1,7 @@
 <header>
 	<div class="container">
 
-		<div class="py-2">
+		<div class="py-4">
 			<h4>
 				<?php echo get_option( 'blogname' ); ?>
 			</h4>
@@ -10,21 +10,7 @@
 			</div>
 		</div>
 
-		<hr/>
-
-		<ul class="nav">
-			<li class="nav-item">
-				<a class="nav-link" href="#">Link1</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#">Link2</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link active" href="#">Link3</a>
-			</li>
-		</ul>
-
-		<hr/>
+        <hr>
 
 	</div>
 </header>
