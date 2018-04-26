@@ -10,7 +10,7 @@
 			</div>
 		</div>
 
-        <hr>
+        <hr class="m-0">
 
 	</div>
 </header>

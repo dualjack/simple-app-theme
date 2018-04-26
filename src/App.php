@@ -6,7 +6,8 @@ namespace dualjack\simple_app\src;
  * Time: 20:42
  */
 
-use shellpress\v1_2_0\ShellPress;
+use dualjack\simple_app\src\Components\Customizer;
+use shellpress\v1_2_1\ShellPress;
 
 class App extends ShellPress {
 
@@ -18,10 +19,22 @@ class App extends ShellPress {
 	protected function onSetUp() {
 
 		//  ----------------------------------------
+		//  Autoloader
+		//  ----------------------------------------
+
+		App::s()->autoloading->addNamespace( 'dualjack\simple_app', dirname( App::s()->getMainPluginFile() ) );
+
+		//  ----------------------------------------
 		//  Actions
 		//  ----------------------------------------
 
 		add_action( 'wp_enqueue_scripts',       array( $this, '_a_enqueueFrontScripts' ) );
+
+		//  ----------------------------------------
+		//  Components
+		//  ----------------------------------------
+
+		new Customizer( self::s() );
 
 	}
 
@@ -44,9 +57,5 @@ class App extends ShellPress {
 		);
 
 	}
-
-	//  ================================================================================
-	//  FILTERS
-	//  ================================================================================
 
 }
