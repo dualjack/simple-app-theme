@@ -34,7 +34,7 @@ class App extends ShellPress {
 		//  Components
 		//  ----------------------------------------
 
-		new Customizer( self::s() );
+		new Customizer( $this );
 
 	}
 
