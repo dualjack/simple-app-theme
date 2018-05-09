@@ -1,30 +1,34 @@
 <?php
-//  ----------------------------------------
-//  Requirements
-//  ----------------------------------------
 
-use dualjack\simple_app\src\App;
+new SimpleAppTheme();
 
-require dirname( __FILE__ ) . '/lib/ShellPress/src/Shared/Utility/RequirementChecker.php';
+class SimpleAppTheme {
 
-$requirementChecker = new ShellPress_RequirementChecker();
+	/**
+	 * SimpleAppTheme constructor.
+	 */
+	public function __construct() {
 
-$checkPHP   = $requirementChecker->checkPHPVersion( '5.3' );
-$checkWP    = $requirementChecker->checkWPVersion( '4.7' );
+		//  ----------------------------------------
+		//  Actions
+		//  ----------------------------------------
 
-if( ! $checkPHP || ! $checkWP ){
+		add_action( 'wp_enqueue_scripts',   array( $this, '_a_enqueueScripts' ) );
+		add_action( 'after_setup_theme',    array( $this, '_a_initThemeSupport' ) );
 
-	if( ! is_admin() ) wp_die( 'Requirements for theme are not fed!' );
+	}
 
-	return;
+	//  ================================================================================
+	//  ACTIONS
+	//  ================================================================================
+
+	/**
+	 * Called on after_setup_theme.
+	 */
+	public function _a_initThemeSupport() {
+
+		add_theme_support( 'title-tag' );
+
+	}
 
 }
-
-//  ----------------------------------------
-//  ShellPress
-//  ----------------------------------------
-
-require_once( __DIR__ . '/lib/ShellPress/ShellPress.php' );
-require_once( __DIR__ . '/src/App.php' );
-
-App::initShellPress( __FILE__, 'simple_app', '1.0.0' );   //  <--- Remember to always change version here

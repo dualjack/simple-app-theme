@@ -1,16 +1,14 @@
-<section>
-    <div class="container">
+<?php
 
-        <article class="py-4">
+echo apply_filters( 'front_post_before', '' );
 
-            <h1>
-				<?php the_title(); ?>
-            </h1>
-            <div class="mt-4">
-				<?php the_content(); ?>
-            </div>
+printf( '<div %1$s>', get_post_class() );
 
-        </article>
+echo apply_filters( 'front_post_title', sprintf( '<h1>%1$s</h1>', get_the_title() ) );
+echo apply_filters( 'front_post_content', sprintf( '<article>%1$s</article>', get_the_content() ) );
 
-    </div>
-</section>
+printf( '</div>' );
+
+echo apply_filters( 'front_post_after', '' );
+
+?>

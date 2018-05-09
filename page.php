@@ -1,5 +1,6 @@
 <?php
 get_header();
+get_template_part( 'parts/header' );
 
 while( have_posts() ){
 
@@ -8,4 +9,5 @@ while( have_posts() ){
 
 }
 
+get_template_part( 'parts/footer' );
 get_footer();
