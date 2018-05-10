@@ -13,7 +13,6 @@ class SimpleAppTheme {
 		//  Actions
 		//  ----------------------------------------
 
-		add_action( 'wp_enqueue_scripts',   array( $this, '_a_enqueueScripts' ) );
 		add_action( 'after_setup_theme',    array( $this, '_a_initThemeSupport' ) );
 
 	}
