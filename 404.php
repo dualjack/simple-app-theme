@@ -2,7 +2,8 @@
 get_header();
 get_template_part( 'parts/header' );
 
-echo apply_filters( 'front_404_message', sprintf( '<p>%1$s</p>', __( '404 - Not Found' ) ) );
+$message =  apply_filters( 'the_content', '404' );
+echo        apply_filters( 'front_404_message', $message );
 
 get_template_part( 'parts/footer' );
 get_footer();

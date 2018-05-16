@@ -2,10 +2,18 @@
 get_header();
 get_template_part( 'parts/header' );
 
-while( have_posts() ){
+if( have_posts() ){
 
-	the_post();
-	get_template_part( 'parts/content' );
+	while( have_posts() ){
+
+		the_post();
+		get_template_part( 'parts/content' );
+
+	}
+
+} else {
+
+	echo apply_filters( 'front_no_posts', '' );
 
 }
 
