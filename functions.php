@@ -70,7 +70,7 @@ class SimpleAppTheme {
 		//  Make request
 		//  ----------------------------------------
 
-		$response       = wp_remote_post( '' );
+		$response       = wp_remote_get( 'https://raw.githubusercontent.com/dualjack/simple-app-theme/master/updates.json' );
 		$responseBody   = wp_remote_retrieve_body( $response );
 		$responseCode   = wp_remote_retrieve_response_code( $response );
 
