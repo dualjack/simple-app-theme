@@ -51,8 +51,6 @@ class SimpleAppTheme {
 
 		if( ! isset( $transient->response ) ) return $transient;    //  Check, if we have an array set. Sometimes there are errors.
 
-//		wp_die( sprintf( '<pre>%1$s</pre>', var_export( $transient, true ) ) );
-
 		//  ----------------------------------------
 		//  Prepare data for request
 		//  ----------------------------------------
@@ -76,16 +74,15 @@ class SimpleAppTheme {
 
 		if( ! is_wp_error( $response ) && $responseCode === 200 ){
 
-			$encoded = json_decode( $responseBody );
+			$encoded = (array) json_decode( $responseBody, true );
 
-			if( $encoded && isset( $encoded->new_version ) && version_compare( $encoded->new_version, $version, '>' ) ){
+			if( $encoded && isset( $encoded['new_version'] ) && version_compare( $encoded['new_version'], $version, '>' ) ){
 
-				$transient->response[ $basename ] = (object) $encoded;
+				$transient->response[ $basename ] = $encoded;
 
 			} else {
 
 				unset( $transient->response[ $basename ]);
-				return $transient;
 
 			}
 
