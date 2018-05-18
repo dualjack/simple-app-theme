@@ -44,6 +44,8 @@ class SimpleAppTheme {
 	//  ================================================================================
 
 	/**
+	 * Adds custom theme update info data from github repository.
+	 *
 	 * @param object $transient
 	 *
 	 * @internal
@@ -52,7 +54,8 @@ class SimpleAppTheme {
 	 */
 	public function _f_addUpdateInfoToThemeTransient( $transient ) {
 
-		if( ! isset( $transient->response ) ) return $transient;    //  Check, if we have an array set. Sometimes there are errors.
+		if( ! isset( $transient->response ) ) return $transient;                        //  Check, if we have an array set. Sometimes there are errors.
+		if( isset( $transient->response[ $this::NAME ] ) ) return $transient;           //  Do not fire remote check version twice.
 
 		//  ----------------------------------------
 		//  Prepare data for request
@@ -104,12 +107,10 @@ class SimpleAppTheme {
 
 		if( strpos( $source, $this::NAME ) === false ) return $source;  //  Are we talking about this theme?
 
-		wp_die( var_export( $source, true ) );
+		$newSource  = trailingslashit( dirname( $source ) ) . trailingslashit( $this::NAME );
+		$result     = rename( $source, $newSource );
 
-		$path_parts = pathinfo( $source );
-		$newsource = trailingslashit( $path_parts['dirname'] ) . trailingslashit( 'github-plugin-for-wordpress' );
-		rename( $source, $newsource );
-		return $newsource;
+		return $result ? $newSource : $source;
 
 	}
 
