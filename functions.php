@@ -4,6 +4,8 @@ new SimpleAppTheme();
 
 class SimpleAppTheme {
 
+	const NAME = 'simple-app-theme';
+
 	/**
 	 * SimpleAppTheme constructor.
 	 */
@@ -20,6 +22,7 @@ class SimpleAppTheme {
 		//  ----------------------------------------
 
 		add_filter( 'pre_set_site_transient_update_themes',     array( $this, '_f_addUpdateInfoToThemeTransient' ) );
+		add_filter( 'upgrader_source_selection',                array( $this, '_f_renameGitHubZipFile' ) );
 
 	}
 
@@ -61,9 +64,6 @@ class SimpleAppTheme {
 
 		$theme = wp_get_theme();    /** @var WP_Theme $theme */
 
-		$basename = 'simple-app-theme';
-		$version = $theme->get( 'Version' );
-
 		//  ----------------------------------------
 		//  Make request
 		//  ----------------------------------------
@@ -76,19 +76,40 @@ class SimpleAppTheme {
 
 			$encoded = (array) json_decode( $responseBody, true );
 
-			if( $encoded && isset( $encoded['new_version'] ) && version_compare( $encoded['new_version'], $version, '>' ) ){
+			if( $encoded && isset( $encoded['new_version'] ) && version_compare( $encoded['new_version'], $theme->get( 'Version' ), '>' ) ){
 
-				$transient->response[ $basename ] = $encoded;
+				$transient->response[ $this::NAME ] = $encoded;
 
 			} else {
 
-				unset( $transient->response[ $basename ]);
+				unset( $transient->response[ $this::NAME ]);
 
 			}
 
 		}
 
 		return $transient;
+
+	}
+
+	/**
+	 * GitHub provides releases as zipped directory with tag version suffix.
+	 * This method removes it.
+	 *
+	 * @param $source
+	 *
+	 * @return string
+	 */
+	public function _f_renameGitHubZipFile( $source ) {
+
+		if( strpos( $source, $this::NAME ) === false ) return $source;  //  Are we talking about this theme?
+
+		wp_die( var_export( $source, true ) );
+
+		$path_parts = pathinfo( $source );
+		$newsource = trailingslashit( $path_parts['dirname'] ) . trailingslashit( 'github-plugin-for-wordpress' );
+		rename( $source, $newsource );
+		return $newsource;
 
 	}
 
