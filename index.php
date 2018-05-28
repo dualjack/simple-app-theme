@@ -2,7 +2,9 @@
 get_header();
 get_template_part( 'parts/header' );
 
-if( have_posts() ){
+echo apply_filters( 'front_before_loop', '' );
+
+if( have_posts() && apply_filters( 'front_display_posts', true ) ){
 
 	while( have_posts() ){
 
@@ -16,6 +18,8 @@ if( have_posts() ){
 	echo apply_filters( 'front_no_posts', '' );
 
 }
+
+echo apply_filters( 'front_after_loop', '' );
 
 get_template_part( 'parts/footer' );
 get_footer();
